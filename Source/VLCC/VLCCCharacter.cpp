@@ -93,6 +93,7 @@ void AVLCCCharacter::Collect()
 	if (CollectedItem)
 	{
 		CollectedItem->ShowPickupWidget(false);
+		//
 		CollectedItem->Interact();
 	}
 }

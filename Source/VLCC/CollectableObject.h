@@ -32,6 +32,9 @@ protected:
 
 private:
 
+	UPROPERTY()
+	FName NameOfObject;
+
 	UPROPERTY(VisibleAnywhere, Category = "Pickup Properties")
 	class UStaticMeshComponent* Mesh;
 
