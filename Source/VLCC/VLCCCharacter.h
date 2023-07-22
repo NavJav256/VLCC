@@ -32,6 +32,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = Input)
 	UInputAction* JumpAction;
 
+	UPROPERTY(EditAnywhere, Category = Input)
+	UInputAction* InteractAction;
+
 protected:
 
 	virtual void BeginPlay() override;
@@ -40,6 +43,8 @@ protected:
 
 	void Look(const FInputActionValue& Value);
 
+	void Collect();
+
 private:
 
 	UPROPERTY(VisibleAnywhere, Category = Camera)
@@ -47,5 +52,18 @@ private:
 
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 	class UCameraComponent* FollowCamera;
+
+	UPROPERTY(VisibleAnywhere, Category = "Collectibles")
+	class ACollectableObject* CollectedItem;
+
+	UPROPERTY(EditAnywhere, Category = "Collectibles")
+	TArray<ACollectableObject*> Collectibles;
+
+	UPROPERTY(VisibleAnywhere, Category = "Collectibles")
+	TMap<ACollectableObject*, bool> Collected;
+
+public:
+
+	void SetCollectedItem(ACollectableObject* Item);
 
 };

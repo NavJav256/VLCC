@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "CollectableObject.h"
 
 AVLCCCharacter::AVLCCCharacter()
 {
@@ -32,6 +33,11 @@ void AVLCCCharacter::BeginPlay()
 			Subsystem->AddMappingContext(MappingContext, 0);
 		}
 	}
+
+	for (ACollectableObject* Collectible : Collectibles)
+	{
+		Collected.Add(Collectible, false);
+	}
 }
 
 
@@ -53,6 +59,8 @@ void AVLCCCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
+
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &AVLCCCharacter::Collect);
 	}
 }
 
@@ -83,4 +91,14 @@ void AVLCCCharacter::Look(const FInputActionValue& Value)
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(-LookAxisVector.Y);
 	}
+}
+
+void AVLCCCharacter::Collect()
+{
+	Collected[CollectedItem] = true;
+}
+
+void AVLCCCharacter::SetCollectedItem(ACollectableObject* Item)
+{
+	CollectedItem = Item;
 }
