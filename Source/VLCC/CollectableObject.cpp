@@ -61,7 +61,7 @@ void ACollectableObject::OnSphereOverlap(UPrimitiveComponent* OverlapepdComponen
 	AVLCCCharacter* VLCCCharacter = Cast<AVLCCCharacter>(OtherActor);
 	if (VLCCCharacter)
 	{
-		
+		VLCCCharacter->SetCollectedItem(this);
 	}
 }
 
@@ -70,7 +70,7 @@ void ACollectableObject::OnSphereEndOverlap(UPrimitiveComponent* OverlapepdCompo
 	AVLCCCharacter* VLCCCharacter = Cast<AVLCCCharacter>(OtherActor);
 	if (VLCCCharacter)
 	{
-
+		VLCCCharacter->SetCollectedItem(nullptr);
 	}
 }
 

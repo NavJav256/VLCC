@@ -56,11 +56,8 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Collectibles")
 	class ACollectableObject* CollectedItem;
 
-	UPROPERTY(EditAnywhere, Category = "Collectibles")
-	TArray<ACollectableObject*> Collectibles;
-
 	UPROPERTY(VisibleAnywhere, Category = "Collectibles")
-	TMap<ACollectableObject*, bool> Collected;
+	TArray<ACollectableObject*> Collected;
 
 public:
 

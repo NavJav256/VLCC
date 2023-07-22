@@ -18,11 +18,11 @@ public:
 
 	void ShowPickupWidget(bool bShowWidget);
 
+	void Interact() override;
+
 protected:
 
 	virtual void BeginPlay() override;
-
-	virtual void Interact() override;
 
 	UFUNCTION()
 	virtual void OnSphereOverlap(UPrimitiveComponent* OverlapepdComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);

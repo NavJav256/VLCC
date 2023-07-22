@@ -33,11 +33,6 @@ void AVLCCCharacter::BeginPlay()
 			Subsystem->AddMappingContext(MappingContext, 0);
 		}
 	}
-
-	for (ACollectableObject* Collectible : Collectibles)
-	{
-		Collected.Add(Collectible, false);
-	}
 }
 
 
@@ -95,10 +90,24 @@ void AVLCCCharacter::Look(const FInputActionValue& Value)
 
 void AVLCCCharacter::Collect()
 {
-	Collected[CollectedItem] = true;
+	if (CollectedItem)
+	{
+		CollectedItem->ShowPickupWidget(false);
+		CollectedItem->Interact();
+	}
 }
 
 void AVLCCCharacter::SetCollectedItem(ACollectableObject* Item)
 {
+	if (CollectedItem)
+	{
+		CollectedItem->ShowPickupWidget(false);
+	}
+
 	CollectedItem = Item;
+
+	if (CollectedItem)
+	{
+		CollectedItem->ShowPickupWidget(true);
+	}
 }
