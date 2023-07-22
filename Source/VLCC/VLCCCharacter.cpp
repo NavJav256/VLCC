@@ -33,6 +33,8 @@ void AVLCCCharacter::BeginPlay()
 			Subsystem->AddMappingContext(MappingContext, 0);
 		}
 	}
+	
+	Collected.Init(false, NumberOfItems);
 }
 
 
@@ -93,7 +95,7 @@ void AVLCCCharacter::Collect()
 	if (CollectedItem)
 	{
 		CollectedItem->ShowPickupWidget(false);
-		//
+		Collected[CollectedItem->GetIndex()] = true;
 		CollectedItem->Interact();
 	}
 }

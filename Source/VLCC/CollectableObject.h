@@ -33,7 +33,7 @@ protected:
 private:
 
 	UPROPERTY(EditAnywhere, Category = "Pickup Properties")
-	FString Name;
+	int32 IndexOfArray;
 
 	UPROPERTY(VisibleAnywhere, Category = "Pickup Properties")
 	class UStaticMeshComponent* Mesh;
@@ -44,4 +44,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Pickup Properties")
 	class UWidgetComponent* PickupWidget;
 
+public:
+
+	FORCEINLINE int32 GetIndex() { return IndexOfArray; }
 };

@@ -7,18 +7,6 @@
 #include "InputActionValue.h"
 #include "VLCCCharacter.generated.h"
 
-USTRUCT(BlueprintType)
-struct FCollectible
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditAnywhere, Category = "Collectibles")
-	FString Name;
-
-	UPROPERTY(VisibleAnywhere, Category = "Collectibles")
-	bool bCollected = false;
-};
-
 UCLASS()
 class VLCC_API AVLCCCharacter : public ACharacter
 {
@@ -69,10 +57,10 @@ private:
 	class ACollectableObject* CollectedItem;
 
 	UPROPERTY(EditAnywhere, Category = "Collectibles")
-	TArray<FCollectible> Items;
+	int32 NumberOfItems;
 
 	UPROPERTY(VisibleAnywhere, Category = "Collectibles")
-	TArray<ACollectableObject*> Collected;
+	TArray<bool> Collected;
 
 public:
 
