@@ -66,11 +66,10 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Collectibles")
 	int32 NumberOfItems;
 
-	UPROPERTY(VisibleAnywhere, Category = "Collectibles")
-	TArray<bool> Collected;
-
 public:
 
 	void SetCollectedItem(ACollectableObject* Item);
+
+	FORCEINLINE int32 GetNumberOfItems() { return NumberOfItems; }
 
 };

@@ -8,6 +8,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "CollectableObject.h"
 #include "RespawnGameMode.h"
+#include "VLCCPlayerController.h"
 
 AVLCCCharacter::AVLCCCharacter()
 {
@@ -34,8 +35,11 @@ void AVLCCCharacter::BeginPlay()
 			Subsystem->AddMappingContext(MappingContext, 0);
 		}
 	}
-	
-	Collected.Init(false, NumberOfItems);
+
+	if (AVLCCPlayerController* VLCCPlayerController = Cast<AVLCCPlayerController>(GetController()))
+	{
+		VLCCPlayerController->InitItems(NumberOfItems);
+	}
 }
 
 void AVLCCCharacter::Destroyed()
@@ -111,7 +115,10 @@ void AVLCCCharacter::Collect()
 	if (CollectedItem)
 	{
 		CollectedItem->ShowPickupWidget(false);
-		Collected[CollectedItem->GetIndex()] = true;
+		if (AVLCCPlayerController* VLCCPlayerController = Cast<AVLCCPlayerController>(GetController()))
+		{
+			VLCCPlayerController->UpdateHUDCollected(CollectedItem->GetIndex());
+		}
 		CollectedItem->Interact();
 	}
 }
