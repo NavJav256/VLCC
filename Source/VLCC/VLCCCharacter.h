@@ -38,6 +38,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = Input)
 	UInputAction* RestartAction;
 
+	UFUNCTION()
+	void OnAudioFinished();
+
 protected:
 
 	virtual void BeginPlay() override;
@@ -53,6 +56,12 @@ protected:
 	void CallRestartPlayer();
 
 private:
+
+	UPROPERTY(VisibleAnywhere, Category = "Music")
+	class UAudioComponent* BackgroundMusicAudioComponent;
+
+	UPROPERTY(EditAnywhere, Category = "Music")
+	USoundBase* BackgroundMusic;
 
 	UPROPERTY(VisibleAnywhere, Category = Camera)
 	class USpringArmComponent* CameraBoom;

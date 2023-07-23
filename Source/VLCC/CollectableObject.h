@@ -20,6 +20,9 @@ public:
 
 	void Interact() override;
 
+	UPROPERTY(EditAnywhere, Category = "Pickup Properties")
+	class USoundCue* PickupCue;
+
 protected:
 
 	virtual void BeginPlay() override;

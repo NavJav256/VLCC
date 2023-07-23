@@ -9,6 +9,9 @@
 #include "CollectableObject.h"
 #include "RespawnGameMode.h"
 #include "VLCCPlayerController.h"
+#include "Sound/SoundCue.h"
+#include "Kismet/GameplayStatics.h"
+#include "Components/AudioComponent.h"
 
 AVLCCCharacter::AVLCCCharacter()
 {
@@ -22,6 +25,9 @@ AVLCCCharacter::AVLCCCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
+
+	BackgroundMusicAudioComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("BackgroundMusicAudioComponent"));
+	BackgroundMusicAudioComponent->SetupAttachment(RootComponent);
 }
 
 void AVLCCCharacter::BeginPlay()
@@ -40,6 +46,18 @@ void AVLCCCharacter::BeginPlay()
 	{
 		VLCCPlayerController->InitItems(NumberOfItems);
 	}
+
+	if (BackgroundMusic)
+	{
+		BackgroundMusicAudioComponent->SetSound(BackgroundMusic);
+		BackgroundMusicAudioComponent->OnAudioFinished.AddDynamic(this, &AVLCCCharacter::OnAudioFinished);
+		BackgroundMusicAudioComponent->Play();
+	}
+}
+
+void AVLCCCharacter::OnAudioFinished()
+{
+	BackgroundMusicAudioComponent->Play();
 }
 
 void AVLCCCharacter::Destroyed()
@@ -115,6 +133,10 @@ void AVLCCCharacter::Collect()
 	if (CollectedItem)
 	{
 		CollectedItem->ShowPickupWidget(false);
+		if (CollectedItem->PickupCue)
+		{
+			UGameplayStatics::PlaySoundAtLocation(this, CollectedItem->PickupCue, GetActorLocation());
+		}
 		if (AVLCCPlayerController* VLCCPlayerController = Cast<AVLCCPlayerController>(GetController()))
 		{
 			VLCCPlayerController->UpdateHUDCollected(CollectedItem->GetIndex());
