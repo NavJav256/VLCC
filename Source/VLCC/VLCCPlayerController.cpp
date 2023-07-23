@@ -34,6 +34,32 @@ void AVLCCPlayerController::SetHUDCollected()
 
 void AVLCCPlayerController::UpdateHUDCollected(int32 Index)
 {
+	VLCCHUD = VLCCHUD == nullptr ? Cast<AVLCCHUD>(GetHUD()) : VLCCHUD;
+	
 	CollectedItems[Index] = true;
+	if (VLCCHUD && VLCCHUD->VLCCOverlay)
+	{
+		switch (Index)
+		{
+			case 0:
+				VLCCHUD->VLCCOverlay->SetItemOneText(ItemOneName);
+				break;
+			case 1:
+				VLCCHUD->VLCCOverlay->SetItemTwoText(ItemTwoName);
+				break;
+			case 2:
+				VLCCHUD->VLCCOverlay->SetItemThreeText(ItemThreeName);
+				break;
+			case 3:
+				VLCCHUD->VLCCOverlay->SetItemFourText(ItemFourName);
+				break;
+			case 4:
+				VLCCHUD->VLCCOverlay->SetItemFiveText(ItemFiveName);
+				break;
+			case 5:
+				VLCCHUD->VLCCOverlay->SetItemSixText(ItemSixName);
+				break;
+		}
+	}
 	SetHUDCollected();
 }

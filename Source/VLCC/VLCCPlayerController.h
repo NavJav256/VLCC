@@ -29,6 +29,24 @@ private:
 	UPROPERTY()
 	class AVLCCHUD* VLCCHUD;
 
+	UPROPERTY(EditAnywhere, Category = "Collectibles");
+	FString ItemOneName;
+
+	UPROPERTY(EditAnywhere, Category = "Collectibles");
+	FString ItemTwoName;
+
+	UPROPERTY(EditAnywhere, Category = "Collectibles");
+	FString ItemThreeName;
+
+	UPROPERTY(EditAnywhere, Category = "Collectibles");
+	FString ItemFourName;
+
+	UPROPERTY(EditAnywhere, Category = "Collectibles");
+	FString ItemFiveName;
+
+	UPROPERTY(EditAnywhere, Category = "Collectibles");
+	FString ItemSixName;
+
 	UPROPERTY(VisibleAnywhere, Category = "Collectibles")
 	TArray<bool> CollectedItems;
 
