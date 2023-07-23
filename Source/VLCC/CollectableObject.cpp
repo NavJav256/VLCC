@@ -45,11 +45,7 @@ void ACollectableObject::BeginPlay()
 
 void ACollectableObject::Interact()
 {
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, FString(TEXT("Interacted")));
-	}
-	//Destroy();
+	Destroy();
 }
 
 void ACollectableObject::ShowPickupWidget(bool bShowWidget)

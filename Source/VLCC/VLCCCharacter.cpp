@@ -7,6 +7,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "CollectableObject.h"
+#include "RespawnGameMode.h"
 
 AVLCCCharacter::AVLCCCharacter()
 {
@@ -37,6 +38,19 @@ void AVLCCCharacter::BeginPlay()
 	Collected.Init(false, NumberOfItems);
 }
 
+void AVLCCCharacter::Destroyed()
+{
+	Super::Destroyed();
+
+	if (UWorld* World = GetWorld())
+	{
+		if (ARespawnGameMode* GameMode = Cast<ARespawnGameMode>(World->GetAuthGameMode()))
+		{
+			GameMode->GetOnPlayerDied().Broadcast(this);
+		}
+	}
+}
+
 
 void AVLCCCharacter::Tick(float DeltaTime)
 {
@@ -58,6 +72,8 @@ void AVLCCCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 
 		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Triggered, this, &AVLCCCharacter::Collect);
+
+		EnhancedInputComponent->BindAction(RestartAction, ETriggerEvent::Triggered, this, &AVLCCCharacter::CallRestartPlayer);
 	}
 }
 
@@ -97,6 +113,21 @@ void AVLCCCharacter::Collect()
 		CollectedItem->ShowPickupWidget(false);
 		Collected[CollectedItem->GetIndex()] = true;
 		CollectedItem->Interact();
+	}
+}
+
+void AVLCCCharacter::CallRestartPlayer()
+{
+	AController* CortollerRef = GetController();
+
+	Destroy();
+
+	if (UWorld* World = GetWorld())
+	{
+		if (ARespawnGameMode* GameMode = Cast<ARespawnGameMode>(World->GetAuthGameMode()))
+		{
+			GameMode->RestartPlayer(CortollerRef);
+		}
 	}
 }
 

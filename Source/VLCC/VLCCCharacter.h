@@ -35,15 +35,22 @@ public:
 	UPROPERTY(EditAnywhere, Category = Input)
 	UInputAction* InteractAction;
 
+	UPROPERTY(EditAnywhere, Category = Input)
+	UInputAction* RestartAction;
+
 protected:
 
 	virtual void BeginPlay() override;
+
+	virtual void Destroyed();
 
 	void Move(const FInputActionValue& Value);
 
 	void Look(const FInputActionValue& Value);
 
 	void Collect();
+
+	void CallRestartPlayer();
 
 private:
 
